@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Agni Rakshak</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script> <!-- MQTT in browser -->
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Agni Rakshak</h1>
+    </header>
+
+    <nav class="tab-nav">
+      <button class="tab-btn active">Temperature</button>
+      <button class="tab-btn">Settings</button>
+      <button class="tab-btn">Diagnosis-I</button>
+      <button class="tab-btn">Fibre Mapping</button>
+      <button class="tab-btn">Logging</button>
+      <button class="tab-btn">Server Info</button>
+    </nav>
+
+    <section class="temperature-tab">
+      <div class="controls">
+        <div class="left-section">
+          <button class="btn grey">Initialize</button>
+          <label>Device ID:
+            <input type="text" value="TEK" />
+          </label>
+          <label>Alarm Temperature:
+            <input type="number" value="36" />
+          </label>
+          <button class="btn green">Start</button>
+          <button class="btn red">Stop</button>
+        </div>
+
+        <div class="right-section">
+          <div class="status-box">
+            <p>Room Temperature</p>
+            <span class="status-value" id="room-temp">--</span>
+          </div>
+          <div class="status-box">
+            <p>Peak Temperature</p>
+            <span class="status-value" id="peak-temp">--</span>
+          </div>
+          <div class="status-box">
+            <p>Location</p>
+            <span class="status-value" id="location">--</span>
+          </div>
+          <div class="status-box fire-status">
+            <p>Fire Status</p>
+            <span class="fire-label" id="fire-status">SAFE</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="graph-area">
+        <canvas id="tempChart"></canvas>
+      </div>
+
+      <div class="hotzones">
+        <h3>Hot Zones</h3>
+        <div class="zone-grid">
+          <div class="zone"><span class="led green" id="led1"></span>Z1</div>
+          <div class="zone"><span class="led green" id="led2"></span>Z2</div>
+          <div class="zone"><span class="led green" id="led3"></span>Z3</div>
+          <div class="zone"><span class="led green" id="led4"></span>Z4</div>
+          <div class="zone"><span class="led green" id="led5"></span>Z5</div>
+          <div class="zone"><span class="led green" id="led6"></span>Z6</div>
+          <div class="zone"><span class="led green" id="led7"></span>Z7</div>
+          <div class="zone"><span class="led green" id="led8"></span>Z8</div>
+          <div class="zone"><span class="led green" id="led9"></span>Z9</div>
+          <div class="zone"><span class="led green" id="led10"></span>Z10</div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script></script>
+</body>
+</html>
