@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Basic HTML metadata and page title -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agni Rakshak</title>
+
+    <!-- Link to external stylesheet using Flask's static path -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- Chart.js library for rendering line graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Application Header -->
+        <header>
+            <h1>Agni Rakshak</h1>
+        </header>
+
+        <!-- Main monitoring section containing controls and data display -->
+        <section class="temperature-tab">
+
+            <!-- Control buttons and system status -->
+            <div class="controls">
+                <div class="left-section">
+                    <!-- Start/Stop Monitoring Buttons -->
+                    <button class="btn green">Start</button>
+                    <button class="btn red">Stop</button>
+
+                    <!-- System Status Information -->
+                    <div class="status-box system-info">
+                        <p>System Information</p>
+                        <p>Status: Online</p> <!-- Dynamically updated -->
+                        <p>Last Updated: Now</p> <!-- Dynamically updated -->
+                    </div>
+                </div>
+
+                <!-- Display for real-time temperature, peak, location, and fire status -->
+                <div class="right-section">
+                    <div class="top-right">
+                        <div class="status-box">
+                            <p>Room Temperature</p>
+                            <span class="status-value" id="room-temp">--</span>
+                        </div>
+                        <div class="status-box">
+                            <p>Peak Temperature</p>
+                            <span class="status-value" id="peak-temp">--</span>
+                        </div>
+                        <div class="status-box">
+                            <p>Location</p>
+                            <span class="status-value" id="location">--</span>
+                        </div>
+                        <div class="status-box">
+                            <p>Fire Status</p>
+                            <span class="fire-label" id="fire-status">SAFE</span>
+                        </div>
+                    </div>
+
+                    <!-- Alarm threshold and polling delay configuration -->
+                    <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; margin-top: 20px;font-size: 20px;">
+                        <label>Alarm Temperature:
+                            <!-- Custom number input with manual up/down arrows -->
+                             <div class="number-input">
+                                <!-- Input field to set alarm threshold temperature -->
+                                <input type="number" value="36" min="0" max="100">
+                                <!-- Custom arrow buttons for increasing/decreasing the value -->
+                                <div class="arrows">
+                                    <div class="arrow up">&#9650;</div>
+                                    <div class="arrow down">&#9660;</div>
+                                </div>
+                            </div>
+                        </label>
+                        
+                        <div class="delay-selection">
+                            <label for="delay-select">Delay:</label>
+                            <!-- Dropdown for selecting data refresh interval -->
+                            <select id="delay-select" style="margin-left: 5px;">
+                                <option value="1">1 sec</option>
+                                <option value="2">2 sec</option>
+                                <option value="3">3 sec</option>
+                                <option value="4">4 sec</option>
+                                <option value="5">5 sec</option>
+                                <option value="10">10 sec</option>
+                                <option value="30">30 sec</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Temperature graph section using Chart.js -->
+            <div class="graph-container">
+                <canvas id="tempChart"></canvas>
+            </div>
+
+            <!-- LED indicators for 10 fire detection zones -->
+            <div class="hotzones">
+                <h3>Hot Zones</h3>
+                <div class="zone-grid">
+                    {% for i in range(1, 11) %}
+                    <div class="zone"><span class="led green" id="led{{ i }}"></span>Z{{ i }}</div>
+                    {% endfor %}
+                    <!-- Zones dynamically rendered using Jinja loop -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Main frontend JavaScript to manage chart, monitoring, and updates -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>
